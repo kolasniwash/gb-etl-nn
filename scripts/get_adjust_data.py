@@ -1,14 +1,12 @@
+import pandas as pd
+import requests as rq
+import json
+import io
+import datetime
 
-if __name__ == "__main__":
-	import pandas as pd
-	import requests as rq
-	import json
-	import io
-	import datetime
-
-
+def pull_adjust():
 	today = datetime.date.today()
-	last30 = today - datetime.timedelta(days=90)
+	last30 = today - datetime.timedelta(days=30)
 	today = str(today)
 	last30 = str(last30)
 
@@ -39,3 +37,4 @@ if __name__ == "__main__":
 	print(data_adjust.head())
 	data_adjust.to_csv("/home/nick/adjust/data/ses_clk_by_day_" + today + ".csv")
 
+	return data_adjust
