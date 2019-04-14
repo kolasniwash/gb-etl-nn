@@ -4,7 +4,7 @@ if __name__ == "__main__":
 	from google.oauth2 import service_account
 	import pandas as pd
 	import datetime
-	import get_adjust_data
+	import adjust_nn_deliverables_get
 
 	#consruct client and login to goolg api
 	credentials = service_account.Credentials.from_service_account_file('/home/nick/adjust/keys/tableau-neuronation-40af18a1a4ed.json')
@@ -17,20 +17,18 @@ if __name__ == "__main__":
 	today = str(today)
 	#last30 = str(last30)
 
-	dataset_id = 'Adjust'
-	table_name = 'adjust_ses_clk_by_day'
-
 	#naming tables
-	table_name_local = 'all_adjust_from_' + today + ".csv"
-	table_name_bigquery = "adjust_ses_clk_by_day"
-	print("Table to update: " + table_name_local)
-	local_path = "/home/nick/adjust/data/" + table_name_local
+	dataset_id = 'Adjust'
+	table_name = 'nn_deliverables'
+	table_name_bigquery = "nn_deliverables"
+	local_path = "/home/nick/adjust/data/" + table_name
 	print("Local path: " + local_path)
 
 	#download old data as dataframe from google big query
 	dataset_ref = client.dataset(dataset_id).table(table_name)
 	table = client.get_table(dataset_ref)
 	data = client.list_rows(table).to_dataframe()
+	print("Downloading adjust data from last 30 days...")
 
 	#boolean mask to extract any dates that are older than 30 days
 	data = data.iloc[:,1:]
@@ -44,9 +42,9 @@ if __name__ == "__main__":
 #	data_new.tail(10)
 #
 	#pull recent 30 days of data from adjust and combine into one dataframe
-	data_new30 = get_adjust_data.pull_adjust()
+	data_new30 = adjust_nn_deliverables_get.get_data()
 	data_full = data_prev30.append(data_new30, ignore_index = True)
-	
+
 	#save the dataframe as local file
 	data_full.to_csv(local_path)
 

@@ -17,8 +17,8 @@ if __name__ == "__main__":
 	import datetime
 	today = datetime.date.today()
 	today = str(today)
-	table_name_local = 'ses_clk_by_day_' + today + ".csv"
-	table_name_bigquery = "adjust_ses_clk_by_day"
+	table_name_local = 'nn_deliverables_' + today + ".csv"
+	table_name_bigquery = "nn_deliverables"
 	print("Table to update: " + table_name_local)
 	local_path = "/home/nick/adjust/data/" + table_name_local
 	print("Local path: " + local_path)

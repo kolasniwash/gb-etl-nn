@@ -8,14 +8,14 @@ if __name__ == "__main__":
 
 
 	today = datetime.date.today()
-	last30 = today - datetime.timedelta(days=30)
+	last_yr = today - datetime.timedelta(days=365)
 	today = str(today)
-	last30 = str(last30)
+	last_yr = str(last_yr)
 
 	#Adjust access tokens and payload
 	user_token = {"Authorization" : "Token 6kkwgMVq7wEgzXFwckTB"}
 	app_token = "x38xxb8m41ds"
-	payload = {"start_date" : last30, "end_date" : today,  "kpis" : "sessions,clicks,installs",
+	payload = {"start_date" : last_yr, "end_date" : today,  "kpis" : "sessions,clicks,installs",
         	  "grouping" : "day, networks, campaigns, adgroups, creatives, country, os_name",
             	}
 
@@ -38,5 +38,4 @@ if __name__ == "__main__":
 	print("Csv file path is /home/nick/adjust/data/ses_clk_by_day_" + today + ".csv")
 	print(data_adjust.head())
 	data_adjust.to_csv("/home/nick/adjust/data/ses_clk_by_day_" + today + ".csv")
-
 

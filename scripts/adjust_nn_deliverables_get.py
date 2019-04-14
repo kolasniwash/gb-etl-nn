@@ -1,10 +1,11 @@
-if __name__ == "__main__":
-	import pandas as pd
-	import requests as rq
-	import json
-	import io
-	import datetime
 
+import pandas as pd
+import requests as rq
+import json
+import io
+import datetime
+
+def get_data():
 	#query today's date. construct two dates. one today, one 30 days ago.
 	today = datetime.date.today()
 	last30 = today - datetime.timedelta(days=30)
@@ -60,3 +61,5 @@ if __name__ == "__main__":
 	print("Csv file path is /home/nick/adjust/data/nn_deliverables_" + today + ".csv")
  	#print(data_adjust.head())
 	data_adjust.to_csv("/home/nick/adjust/data/nn_deliverables_" + today + ".csv")
+
+	return data_adjust
