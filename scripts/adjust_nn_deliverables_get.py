@@ -55,11 +55,4 @@ def get_data():
                        "Age Group >= 3 (udctlp) (Revenue)", "Age provided (9okrzo) (Revenue)","Assessment 1 done (awwr8i) (Revenue)","Assessment 2 done (bja0fi) (Revenue)","Assessment 3 done (gsblgn) (Revenue)","Assessment 4 done (pcw1dl) (Revenue)","Checkout Seen (ukw0nk) (Revenue)","End Onboarding (g7rad1) (Revenue)","Package Selected (gvcwfs) (Revenue)","Purchase (8m98yt) (Revenue)","Registration Done (w2teee) (Revenue)","Session 1 Done (nn5l8r) (Revenue)","Session 1 Started (sr4sdl) (Revenue)","Start Onboarding (3nxr3f) (Revenue)","Training Intensity selected (buuugy) (Revenue)","Welcome Screen Seen (pwqi9z) (Revenue)","s_story_open_read_more (gswco5) (Revenue)"
                       ]
 
-
-        #prints dataframe to a csv and exports it.
-	print("Today's date " + today)
-	print("Csv file path is /home/nick/adjust/data/nn_deliverables_" + today + ".csv")
- 	#print(data_adjust.head())
-	data_adjust.to_csv("/home/nick/adjust/data/nn_deliverables_" + today + ".csv")
-
 	return data_adjust
