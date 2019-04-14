@@ -19,13 +19,13 @@ if __name__ == "__main__":
 
 	#naming tables
 	dataset_id = 'Adjust'
-	table_name = 'nn_deliverables'
+	table_name = 'nn_deliverables_' + today
 	table_name_bigquery = "nn_deliverables"
 	local_path = "/home/nick/adjust/data/" + table_name
 	print("Local path: " + local_path)
 
 	#download old data as dataframe from google big query
-	dataset_ref = client.dataset(dataset_id).table(table_name)
+	dataset_ref = client.dataset(dataset_id).table(table_name_bigquery)
 	table = client.get_table(dataset_ref)
 	data = client.list_rows(table).to_dataframe()
 	print("Downloading adjust data from last 30 days...")
@@ -33,14 +33,7 @@ if __name__ == "__main__":
 	#boolean mask to extract any dates that are older than 30 days
 	data = data.iloc[:,1:]
 	data_prev30 = data[data['date'] < last30]
-#	print(data.dtypes)
-#	print(data_prev30.head())
-#
-#	#filter current df to match the simple version used in testing
-#	data_new = data_new.loc[:,['date', 'tracker_token', 'network', 'campaign',
-#	       'adgroup', 'creative', 'country', 'os_name', 'sessions', 'clicks', 'installs']]
-#	data_new.tail(10)
-#
+
 	#pull recent 30 days of data from adjust and combine into one dataframe
 	data_new30 = adjust_nn_deliverables_get.get_data()
 	data_full = data_prev30.append(data_new30, ignore_index = True)
