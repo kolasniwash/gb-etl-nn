@@ -13,7 +13,8 @@ def get_data():
 	last30 = str(last30)
 
 	#generate the event and revenue access token for the payload.
-	tokens = ["udctlp", "9okrzo", "awwr8i", "bja0fi", "gsblgn", "pcw1dl", "ukw0nk", "g7rad1", "gvcwfs", "8m98yt", "w2teee", "nn5l8r", "sr4sdl", "3nxr3f", "buuugy", "pwqi9z", "gswco5", ","]
+	tokens = ["udctlp", "9okrzo", "awwr8i", "bja0fi", "gsblgn", "pcw1dl", "ukw0nk", "g7rad1", "gvcwfs", "8m98yt", "w2teee", "nn5l8r", 
+		"sr4sdl", "3nxr3f", "buuugy", "pwqi9z", "gswco5", ","]
 
 	events = "_events,"
 	revenue = "_revenue,"
@@ -48,11 +49,27 @@ def get_data():
 	data_adjust = pd.DataFrame(data)
 
 	#sets the coloum names from the defaul deliverables csv
-	data_adjust.columns = ['date', 'tracker_token', 'network', 'campaign', 'adgroup', 'creative', 'country', 'os_name',
-                       'impressions', 'clicks', 'installs','limit_ad_tracking_installs', 'reattributions', 'sessions',
-                       'cohort_revenue', 'revenue', 'daus', 'waus', 'maus', 'gdpr_forgets',
-                       "Age Group >= 3 (udctlp) (Events)" ,"Age provided (9okrzo) (Events)", "Assessment 1 done (awwr8i) (Events)", "Assessment 2 done (bja0fi) (Events)", "Assessment 3 done (gsblgn) (Events)", "Assessment 4 done (pcw1dl) (Events)", "Checkout Seen (ukw0nk) (Events)", "End Onboarding (g7rad1) (Events)", "Package Selected (gvcwfs) (Events)", "Purchase (8m98yt) (Events)", "Registration Done (w2teee) (Events)", "Session 1 Done (nn5l8r) (Events)", "Session 1 Started (sr4sdl) (Events)", "Start Onboarding (3nxr3f) (Events)", "Training Intensity selected (buuugy) (Events)", "Welcome Screen Seen (pwqi9z) (Events)", "s_story_open_read_more (gswco5) (Events)",
-                       "Age Group >= 3 (udctlp) (Revenue)", "Age provided (9okrzo) (Revenue)","Assessment 1 done (awwr8i) (Revenue)","Assessment 2 done (bja0fi) (Revenue)","Assessment 3 done (gsblgn) (Revenue)","Assessment 4 done (pcw1dl) (Revenue)","Checkout Seen (ukw0nk) (Revenue)","End Onboarding (g7rad1) (Revenue)","Package Selected (gvcwfs) (Revenue)","Purchase (8m98yt) (Revenue)","Registration Done (w2teee) (Revenue)","Session 1 Done (nn5l8r) (Revenue)","Session 1 Started (sr4sdl) (Revenue)","Start Onboarding (3nxr3f) (Revenue)","Training Intensity selected (buuugy) (Revenue)","Welcome Screen Seen (pwqi9z) (Revenue)","s_story_open_read_more (gswco5) (Revenue)"
-                      ]
+	data_adjust.columns = ['date', 'tracker_token', 'network', 'campaign', 'adgroup', 
+                               'creative', 'country', 'os_name', 'impressions', 'clicks', 
+                               'installs', 'limit_ad_tracking_installs', 'reattributions', 
+                               'sessions', 'cohort_revenue', 'revenue', 'daus', 'waus', 
+                               'maus', 'gdpr_forgets', 'age_group_greater_than_3_udctlp_events', 
+                               'age_provided_9okrzo_events', 'assessment_1_done_awwr8i_events', 
+                               'assessment_2_done_bja0fi_events', 'assessment_3_done_gsblgn_events', 
+                               'assessment_4_done_pcw1dl_events', 'checkout_seen_ukw0nk_events', 
+                               'end_onboarding_g7rad1_events', 'package_selected_gvcwfs_events', 
+                               'purchase_8m98yt_events', 'registration_done_w2teee_events', 
+                               'session_1_done_nn5l8r_events', 'session_1_started_sr4sdl_events', 
+                               'start_onboarding_3nxr3f_events', 'training_intensity_selected_buuugy_events', 
+                               'welcome_screen_seen_pwqi9z_events', 's_story_open_read_more_gswco5_events', 
+                               'age_group_greater_than_3_udctlp_revenue', 'age_provided_9okrzo_revenue', 
+                               'assessment_1_done_awwr8i_revenue', 'assessment_2_done_bja0fi_revenue', 
+                               'assessment_3_done_gsblgn_revenue', 'assessment_4_done_pcw1dl_revenue', 
+                               'checkout_seen_ukw0nk_revenue', 'end_onboarding_g7rad1_revenue', 
+                               'package_selected_gvcwfs_revenue', 'purchase_8m98yt_revenue', 
+                               'registration_done_w2teee_revenue', 'session_1_done_nn5l8r_revenue', 
+                               'session_1_started_sr4sdl_revenue', 'start_onboarding_3nxr3f_revenue', 
+                               'training_intensity_selected_buuugy_revenue', 'welcome_screen_seen_pwqi9z_revenue', 
+                               's_story_open_read_more_gswco5_revenue']
 
 	return data_adjust
