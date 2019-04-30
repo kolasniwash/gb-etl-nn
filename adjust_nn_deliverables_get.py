@@ -4,6 +4,7 @@ import requests as rq
 import json
 import io
 import datetime
+import settings
 
 def get_data():
 	#query today's date. construct two dates. one today, one 30 days ago.
@@ -31,8 +32,8 @@ def get_data():
 	events_tokens = comma.join(all_tokens)
 
 	#Adjust access tokens and payload
-	user_token = {"Authorization" : "Token 6kkwgMVq7wEgzXFwckTB"}
-	app_token = "x38xxb8m41ds"
+	user_token = {"Authorization" : settings.API_KEY}
+	app_token = settings.token_key
 	kpis = "impressions,clicks,installs,limit_ad_tracking_installs,reattributions,sessions,cohort_revenue,revenue,daus,waus,maus,gdpr_forgets"
 
 	payload = {"start_date" : last30, "end_date" : today,  "kpis" : kpis , "event_kpis" : events_tokens,
