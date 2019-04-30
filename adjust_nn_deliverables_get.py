@@ -7,6 +7,12 @@ import datetime
 import settings
 
 def get_data():
+
+	'''
+	A function that retreves the last 30 days worh of click data from adjust's api and formats it.
+	Formatted data is returned in the form of a dataframe, with column headers appropriate for each metric.
+	'''
+
 	#query today's date. construct two dates. one today, one 30 days ago.
 	today = datetime.date.today()
 	last30 = today - datetime.timedelta(days=30)

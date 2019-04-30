@@ -6,6 +6,17 @@ if __name__ == "__main__":
 	import datetime
 	import adjust_nn_deliverables_get
 
+
+	'''
+	The main script function called daily via a cron on a google VM. 
+
+	Function downloads previous data set from google big query and overwrites the previous 30 days worth of data. The resulting file is saved and uploaded to google big query.
+
+	Future performance imrpovements:
+	1. Delete the csv files on the local VM to save drive space.
+	2. Save the daily csv to google cloud storage bucket.
+	'''
+
 	#consruct client and login to goolg api
 	credentials = service_account.Credentials.from_service_account_file('/home/nick/adjust/keys/tableau-neuronation-40af18a1a4ed.json')
 	project_id = 'tableau-neuronation'
