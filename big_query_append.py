@@ -42,7 +42,7 @@ if __name__ == "__main__":
 	print("Downloading adjust data from last 30 days...")
 
 	#boolean mask to extract any dates that are older than 30 days
-	data = data.iloc[:,1:]
+#	data = data.iloc[:,1:]
 	data_prev30 = data[data['date'] < last30].copy()
 
 	#pull recent 30 days of data from adjust and combine into one dataframe
