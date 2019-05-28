@@ -6,18 +6,18 @@ import io
 import datetime
 import settings
 
-def get_data():
+def get_data(start, finish):
 
 	'''
 	A function that retreves the last 30 days worh of click data from adjust's api and formats it.
 	Formatted data is returned in the form of a dataframe, with column headers appropriate for each metric.
 	'''
-
-	#query today's date. construct two dates. one today, one 30 days ago.
-	today = datetime.date.today()
-	last30 = today - datetime.timedelta(days=30)
-	today = str(today)
-	last30 = str(last30)
+#
+#	#query today's date. construct two dates. one today, one 30 days ago.
+#	yesterday = finish #datetime.date.today()
+#	last30 = yesterday - datetime.timedelta(days=30)
+#	yesterday = str(yesterday)
+#	last30 = str(last30)
 
 	#generate the event and revenue access token for the payload.
 	tokens = ["udctlp", "9okrzo", "awwr8i", "bja0fi", "gsblgn", "pcw1dl", "ukw0nk", "g7rad1", "gvcwfs", "8m98yt", "w2teee", "nn5l8r", 
@@ -42,7 +42,7 @@ def get_data():
 	app_token = settings.token_key
 	kpis = "impressions,clicks,installs,limit_ad_tracking_installs,reattributions,sessions,cohort_revenue,revenue,daus,waus,maus,gdpr_forgets"
 
-	payload = {"start_date" : last30, "end_date" : today,  "kpis" : kpis , "event_kpis" : events_tokens,
+	payload = {"start_date" : start, "end_date" : finish,  "kpis" : kpis , "event_kpis" : events_tokens,
 	          "grouping" : "day, networks, campaigns, adgroups, creatives, country, os_name",
 	            }
 
@@ -51,12 +51,8 @@ def get_data():
 	status = response.status_code
 	print(status)
 
-	#creates a datframe the get responces for sessions, clicks, installs
-	data = pd.read_csv(io.StringIO(response.text))
-	data_adjust = pd.DataFrame(data)
-
 	#sets the coloum names from the defaul deliverables csv
-	data_adjust.columns = ['date', 'tracker_token', 'network', 'campaign', 'adgroup', 
+	col = ['date', 'tracker_token', 'network', 'campaign', 'adgroup', 
                                'creative', 'country', 'os_name', 'impressions', 'clicks', 
                                'installs', 'limit_ad_tracking_installs', 'reattributions', 
                                'sessions', 'cohort_revenue', 'revenue', 'daus', 'waus', 
@@ -78,5 +74,9 @@ def get_data():
                                'session_1_started_sr4sdl_revenue', 'start_onboarding_3nxr3f_revenue', 
                                'training_intensity_selected_buuugy_revenue', 'welcome_screen_seen_pwqi9z_revenue', 
                                's_story_open_read_more_gswco5_revenue']
+
+	#creates a datframe the get responces for sessions, clicks, installs
+	data = pd.read_csv(io.StringIO(response.text))
+	data_adjust = pd.DataFrame(data, columns=col)
 
 	return data_adjust

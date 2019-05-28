@@ -23,15 +23,15 @@ if __name__ == "__main__":
 	client = bigquery.Client(credentials = credentials, project = project_id)
 
 	#create two date strings. one for today, one for 30 days ago.
-	today = datetime.date.today()
-	last30 = today - datetime.timedelta(days=30)
-	today = str(today)
-	#last30 = str(last30)
+	yesterday = datetime.date.today() - datetime.timedelta(days=1)
+	last30 = yesterday - datetime.timedelta(days=30)
+	yesterday_str = str(yesterday)
+	last30_str = str(last30)
 
 	#naming tables
 	dataset_id = 'Adjust'
-	table_name = 'nn_deliverables_' + today
-	table_name_bigquery = "nn_deliverables"
+	table_name = 'nn_deliverables_' + yesterday_str
+	table_name_bigquery = "nn_deliverables_good"
 	local_path = "/home/nick/adjust/data/" + table_name
 	print("Local path: " + local_path)
 
@@ -43,14 +43,17 @@ if __name__ == "__main__":
 
 	#boolean mask to extract any dates that are older than 30 days
 	data = data.iloc[:,1:]
-	data_prev30 = data[data['date'] < last30]
+	data_prev30 = data[data['date'] < last30].copy()
 
 	#pull recent 30 days of data from adjust and combine into one dataframe
-	data_new30 = adjust_nn_deliverables_get.get_data()
+	data_new30 = adjust_nn_deliverables_get.get_data(last30_str, yesterday_str)
 	data_full = data_prev30.append(data_new30, ignore_index = True)
+#	print(data_full.head(2))
+	data_full = pd.concat([data_prev30, data_new30])
+#	print(data_full.head(2)
 
 	#save the dataframe as local file
-	data_full.to_csv(local_path)
+	data_full.to_csv(local_path, index = False)
 
 	#try to delete previous table. if failed catch the fail and notify
 	try:
@@ -77,3 +80,4 @@ if __name__ == "__main__":
 	job.result()  # Waits for table load to complete.
 
 	print('Loaded {} rows into project: {} dataset: {} table: {}.'.format(job.output_rows, project_id, dataset_id, table_name_bigquery))
+
