@@ -26,12 +26,12 @@ if __name__ == "__main__":
 	yesterday = datetime.date.today() - datetime.timedelta(days=1)
 	last30 = yesterday - datetime.timedelta(days=30)
 	yesterday_str = str(yesterday)
-	last30_str = str(last30)
+	last30_str =  str(last30)
 
 	#naming tables
 	dataset_id = 'Adjust'
 	table_name = 'nn_deliverables_' + yesterday_str
-	table_name_bigquery = "nn_deliverables_good"
+	table_name_bigquery = "nn_deliverables_combi"
 	local_path = "/home/nick/adjust/data/" + table_name
 	print("Local path: " + local_path)
 
@@ -46,16 +46,37 @@ if __name__ == "__main__":
 	data_prev30 = data[data['date'] < last30].copy()
 
 	#pull recent 30 days of data from adjust and combine into one dataframe
-	data_new30 = adjust_nn_deliverables_get.get_data(last30_str, yesterday_str)
-	data_full = data_prev30.append(data_new30, ignore_index = True)
-#	print(data_full.head(2))
-	data_full = pd.concat([data_prev30, data_new30])
-#	print(data_full.head(2)
+	#data_new30_cur is from the current app token, data_new30_legacy is the old app token
+	data_new30_cur, data_new30_legacy  = adjust_nn_deliverables_get.get_data(last30_str, yesterday_str)
+#	data_new30_cur = pd.DataFrame(data_cur_leg[0])
+#	data_new30_legacy = pd.DataFrame(data_cur_leg[1])
+
+	print('Current:')
+	print(data_new30_cur.shape)
+	print('Legacy:')
+	print(data_new30_legacy.shape)
+
+
+	data_new30 = pd.concat([data_new30_cur, data_new30_legacy]).sort_values('date', axis=0, ascending=True)
+	data_new30 = data_new30.reset_index().drop(columns='index')
+
+	data_full = data_prev30.append(data_new30, ignore_index=True, sort=True)
+	print('data_new30')
+	print(data_new30.shape)
+	print(data_new30.columns)
+	print("")
+
+	print('data_prev30')
+	print(data_prev30.shape)
+	print(data_prev30.columns)
+
+	print('data_full:')
+	print(data_full.shape)
 
 	#save the dataframe as local file
-	data_full.to_csv(local_path, index = False)
+	data_full.to_csv(local_path, index=False)
 
-	#try to delete previous table. if failed catch the fail and notify
+#	try to delete previous table. if failed catch the fail and notify
 	try:
 		print("Trying to delete..." + table_name_bigquery)
 		table_ref = client.dataset(dataset_id).table(table_name_bigquery)
