@@ -1,6 +1,6 @@
 # Simple data pipeline.
 
- This project was made to automate the capture of click stream data that was previously being imported manually into Tableau.
+ This project was made to automate the capture of click stream data that was previously being imported manually into Tableau. Operating in google cloud platform.
 
  Summary of the project's functions.
  1. Connects to adjust API and retreves data from the last 30 days.
